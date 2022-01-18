@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
+import Layout from "./components/Layout";
+import Properties from "./components/Properties";
+import PropertyDetails from "./components/PropertyDetails";
+import Search from "./components/Search";
+import { ThemeProvider } from "./contexts/themeContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/sale" element={<Search purpose="sale" />} />
+            <Route path="/rent" element={<Search purpose="rent" />} />
+            <Route
+              path="/sale/properties"
+              element={<Properties purpose="sale" />}
+            />
+            <Route
+              path="/rent/properties"
+              element={<Properties purpose="rent" />}
+            />
+            <Route path="/property/:propertyId" element={<PropertyDetails />} />
+          </Routes>
+        </Layout>
+      </div>
+    </ThemeProvider>
   );
 }
 

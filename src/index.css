@@ -1,13 +1,56 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@import "leaflet/dist/leaflet.css";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+@tailwind components;
+@tailwind utilities;
+
+.map {
+  height: 40vh;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-top: 16px;
+  box-shadow: 0 0 8px -4px rgba(0, 0, 0, 0.5);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.map .leaflet-container {
+  height: 100%;
+  border-radius: 12px;
+  z-index: 0;
+}
+
+.slick-next::before,
+.slick-prev::before {
+  color: black;
+}
+
+.slick-slide {
+  display: flex !important;
+  justify-content: center;
+  height: 500px;
+}
+
+option[value=""][disabled] {
+  display: none;
+}
+
+.slick-slider {
+  max-height: 250px;
+}
+
+@media (min-width: 768px) {
+  .map {
+    height: 70vh;
+  }
+
+  .slick-slider {
+    max-height: 500px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .map {
+    height: 500px;
+  }
 }
