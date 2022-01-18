@@ -4,11 +4,15 @@ import Layout from "./components/Layout";
 import Properties from "./components/Properties";
 import PropertyDetails from "./components/PropertyDetails";
 import Search from "./components/Search";
-import { ThemeProvider } from "./contexts/themeContext";
+import { ThemeContextProvider } from "./contexts/themeContext";
 
-function App() {
+const App = () => {
+  if (!("isDark" in localStorage)) {
+    localStorage.setItem("isDark", JSON.stringify(true));
+  }
+
   return (
-    <ThemeProvider>
+    <ThemeContextProvider>
       <div className="App">
         <Layout>
           <Routes>
@@ -27,8 +31,8 @@ function App() {
           </Routes>
         </Layout>
       </div>
-    </ThemeProvider>
+    </ThemeContextProvider>
   );
-}
+};
 
 export default App;
