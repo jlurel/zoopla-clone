@@ -33,7 +33,7 @@ const Home = () => {
             className="w-full mb-6 p-2 border-2 rounded dark:bg-gray-500"
             placeholder="Enter full postcode, eg. SW1 0RG"
           />
-          <button className="inline-flex w-3/4 md:w-1/2 py-3 items-center justify-center rounded-md bg-gray-200 text-gray-400">
+          <button className="inline-flex w-3/4 py-3 items-center justify-center rounded-md bg-gray-200 text-gray-400">
             <BiSearch className="mr-2" />
             Look up postcode
           </button>

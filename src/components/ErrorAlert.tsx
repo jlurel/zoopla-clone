@@ -12,7 +12,7 @@ const ErrorAlert = ({
       className="flex flex-col md:flex-row max-w-full fixed bottom-5 left-0 right-0 md:bottom-10 p-2 md:mx-4 bg-red-800 items-center text-red-100 leading-none lg:rounded-full "
       role="alert"
     >
-      <span className="justify-center rounded-full bg-red-500 uppercase px-2 py-1 text-center text-xs font-bold mr-3">
+      <span className="justify-center rounded-md bg-red-500 uppercase px-2 py-1 text-center text-xs font-bold mr-3">
         {`Error ${status}`}
       </span>
       <span className="grow font-semibold mr-2 text-left">{message}</span>
