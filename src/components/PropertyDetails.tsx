@@ -33,7 +33,6 @@ const PropertyDetails = () => {
   const location = useLocation();
   const { property } = location.state as CustomState;
 
-  console.log(property);
   return (
     <>
       <div className="h-full w-full mb-2 md:w-2/3 md:pr-2">

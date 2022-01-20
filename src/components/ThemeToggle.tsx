@@ -5,8 +5,6 @@ import ThemeContext from "../contexts/themeContext";
 const ThemeToggle = () => {
   const { isDark, toggleTheme } = useContext(ThemeContext);
 
-  console.log("Dark: ", isDark);
-
   return (
     <button onClick={() => toggleTheme()}>
       {isDark ? (

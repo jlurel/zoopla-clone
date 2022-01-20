@@ -14,7 +14,6 @@ const Modal = ({
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  console.log(items);
   return (
     <>
       <button

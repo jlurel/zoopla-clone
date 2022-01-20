@@ -145,38 +145,41 @@ const apiKey: string = process.env.REACT_APP_API_KEY as string;
 export const fetchProperties = async (
   area: string | null,
   purpose?: "rent" | "sale",
-  minimum_beds?: string | null | "1",
-  maximum_beds?: string | null | "10",
-  property_type?: string | null | "flats,terraced,detached"
-): Promise<PropertiesData> => {
-  const response = await axios.get(
-    `${baseUrl}/properties/list?area=${area}&listing_status=${purpose}&property_type=${property_type}&minimum_beds=${minimum_beds}&maximum_beds=${maximum_beds}`,
-    {
-      headers: {
-        "x-rapidapi-host": "zoopla.p.rapidapi.com",
-        "x-rapidapi-key": apiKey,
-      },
-    }
-  );
+  minimum_beds?: string | "1",
+  maximum_beds?: string | "10",
+  property_type?: string | "flats,terraced,detached"
+) => {
+  const response = await axios
+    .get<PropertiesData>(
+      `${baseUrl}/properties/list?area=${area}&listing_status=${purpose}&property_type=${property_type}&minimum_beds=${minimum_beds}&maximum_beds=${maximum_beds}`,
+      {
+        headers: {
+          "x-rapidapi-host": "zoopla.p.rapidapi.com",
+          "x-rapidapi-key": apiKey,
+        },
+      }
+    )
+    .catch((error) => {
+      return error.response;
+    });
 
-  const { data } = response;
-
-  return data;
+  return response;
 };
 
-export const fetchSuggestions = async (
-  searchTerm: string
-): Promise<AutoCompleteData> => {
-  const response = await axios.get(
-    `${baseUrl}/auto-complete?search_term=${searchTerm}`,
-    {
-      headers: {
-        "x-rapidapi-host": "zoopla.p.rapidapi.com",
-        "x-rapidapi-key": apiKey,
-      },
-    }
-  );
+export const fetchSuggestions = async (searchTerm: string) => {
+  const response = await axios
+    .get<AutoCompleteData>(
+      `${baseUrl}/auto-complete?search_term=${searchTerm}`,
+      {
+        headers: {
+          "x-rapidapi-host": "zoopla.p.rapidapi.com",
+          "x-rapidapi-key": apiKey,
+        },
+      }
+    )
+    .catch((error) => {
+      return error.response;
+    });
 
-  const { data } = response;
-  return data;
+  return response;
 };

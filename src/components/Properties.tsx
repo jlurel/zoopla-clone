@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetchProperties, Listing } from "../api/fetchApi";
 import {
   MdOutlineBathtub,
   MdOutlineChair,
   MdOutlineKingBed,
 } from "react-icons/md";
 
-import defaultImage from "../assets/images/no-image.svg";
+import { fetchProperties, Listing } from "../api/fetchApi";
+import ErrorAlert from "./ErrorAlert";
 import PropertyLoader from "./PropertyLoader";
+import defaultImage from "../assets/images/no-image.svg";
 
 type Props = {
   purpose?: "rent" | "sale";
@@ -18,12 +19,14 @@ const Properties = ({ purpose }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [properties, setProperties] = useState<Listing[]>();
   const [searchParams] = useSearchParams();
-  const minimum_beds = searchParams.get("minimum_beds");
-  const maximum_beds = searchParams.get("maximum_beds");
-  const property_type = searchParams.get("property_type");
+  const minimum_beds = searchParams.get("minimum_beds") || "1";
+  const maximum_beds = searchParams.get("maximum_beds") || "10";
+  const property_type =
+    searchParams.get("property_type") || "flats,terraced,detached";
   const area = searchParams.get("area");
-
-  console.log(searchParams.entries());
+  const [responseStatus, setResponseStatus] = useState<number>(0);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     const getProperties = async () => {
@@ -35,8 +38,18 @@ const Properties = ({ purpose }: Props) => {
         maximum_beds,
         property_type
       );
-      const { listing } = response;
-      setProperties(listing);
+
+      const { data, status } = response;
+      setResponseStatus(status);
+
+      if (responseStatus !== 200) {
+        setShowAlert(true);
+        const { message } = data;
+        setErrorMessage(message);
+      } else {
+        const { listing } = data;
+        setProperties(listing);
+      }
       setIsLoading(false);
     };
 
@@ -54,6 +67,12 @@ const Properties = ({ purpose }: Props) => {
             <PropertyLoader />
             <PropertyLoader />
           </>
+        ) : showAlert ? (
+          <ErrorAlert
+            status={responseStatus}
+            message={errorMessage}
+            handleClose={() => setShowAlert(false)}
+          />
         ) : (
           properties?.map((property, index) => (
             <Link

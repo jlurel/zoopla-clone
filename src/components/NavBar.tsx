@@ -26,12 +26,12 @@ const NavBar = () => {
           <Logo />
         </Link>
         <div className="inline-flex items-center mx-2 md:mx-5">
-          <h1 className="text-base md:text-lg">
+          <h1 className="text-sm sm:text-base md:text-lg">
             <Link to="/rent">To rent</Link>
           </h1>
         </div>
         <div className="flex items-center mx-2 md:mx-5">
-          <h1 className="text-base md:text-lg">
+          <h1 className="text-sm sm:text-base md:text-lg">
             <Link to="/sale">For sale</Link>
           </h1>
         </div>
