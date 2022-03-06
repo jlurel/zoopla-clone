@@ -71,7 +71,7 @@ const PropertyDetails = () => {
               <div id="listing-specs" className="flex justify-between">
                 {parseInt(property.num_bedrooms) !== 0 && (
                   <div className="flex items-center mr-3">
-                    <MdOutlineKingBed className="mr-1" size={`1.2rem`} />
+                    <MdOutlineKingBed className="mr-1" size={`20px`} />
                     <span>
                       {parseInt(property.num_bedrooms) > 1
                         ? `${parseInt(property.num_bedrooms)} beds`
@@ -81,7 +81,7 @@ const PropertyDetails = () => {
                 )}
                 {parseInt(property.num_bathrooms) !== 0 && (
                   <div className="flex items-center mr-3">
-                    <MdOutlineBathtub className="mr-1" size={`1.2rem`} />
+                    <MdOutlineBathtub className="mr-1" size={`20px`} />
                     <span>
                       {parseInt(property.num_bathrooms) > 1
                         ? `${parseInt(property.num_bathrooms)} baths`
@@ -91,7 +91,7 @@ const PropertyDetails = () => {
                 )}
                 {parseInt(property.num_recepts) !== 0 && (
                   <div className="flex items-center mr-3">
-                    <MdOutlineChair className="mr-1" size={`1.2rem`} />
+                    <MdOutlineChair className="mr-1" size={`20px`} />
                     <span>
                       {parseInt(property.num_recepts) > 1
                         ? `${parseInt(property.num_recepts)} receptions`
@@ -136,60 +136,60 @@ const PropertyDetails = () => {
           </div>
           <div dangerouslySetInnerHTML={{ __html: property.description }} />
         </div>
-        {property.brochure ||
+        {(property.brochure ||
           property.virtual_tour ||
           property.epc_graph ||
           property.epc ||
-          (property.floor_plan && (
-            <div
-              id="more-info"
-              className="grid grid-cols-2 gap-4 py-4 border-b dark:border-white"
-            >
-              <h1 className="col-span-2 text-2xl font-semibold mb-4">
-                More information
-              </h1>
-              {property.brochure && (
-                <Modal
-                  icon={<FaRegFilePdf size={`1.5rem`} className="mr-2" />}
-                  title="Brochure"
-                  images={false}
-                  items={property.brochure}
-                />
-              )}
-              {property.virtual_tour && (
-                <Modal
-                  icon={<FaRegFileVideo size={`1.5rem`} className="mr-2" />}
-                  title="Virtual tour"
-                  images={false}
-                  items={property.virtual_tour}
-                />
-              )}
-              {property.epc_graph && (
-                <Modal
-                  icon={<GiSolarPower size={`1.5rem`} className="mr-2" />}
-                  title="Energy Performance Certificate"
-                  images={true}
-                  items={property.epc_graph}
-                />
-              )}
-              {property.epc && (
-                <Modal
-                  icon={<GiSolarPower size={`1.5rem`} className="mr-2" />}
-                  title="Energy Performance Certificate"
-                  images={true}
-                  items={property.epc}
-                />
-              )}
-              {property.floor_plan && (
-                <Modal
-                  icon={<MdStairs size={`1.5rem`} className="mr-2" />}
-                  title="Floor plan"
-                  images={true}
-                  items={property.floor_plan}
-                />
-              )}
-            </div>
-          ))}
+          property.floor_plan) && (
+          <div
+            id="more-info"
+            className="grid grid-cols-2 gap-4 py-4 border-b dark:border-white"
+          >
+            <h1 className="col-span-2 text-2xl font-semibold mb-4">
+              More information
+            </h1>
+            {property.brochure && (
+              <Modal
+                icon={<FaRegFilePdf size={`24px`} className="mr-2" />}
+                title="Brochure"
+                images={false}
+                items={property.brochure}
+              />
+            )}
+            {property.virtual_tour && (
+              <Modal
+                icon={<FaRegFileVideo size={`24px`} className="mr-2" />}
+                title="Virtual tour"
+                images={false}
+                items={property.virtual_tour}
+              />
+            )}
+            {property.epc_graph && (
+              <Modal
+                icon={<GiSolarPower size={`24px`} className="mr-2" />}
+                title="Energy Performance Certificate"
+                images={true}
+                items={property.epc_graph}
+              />
+            )}
+            {property.epc && (
+              <Modal
+                icon={<GiSolarPower size={`24px`} className="mr-2" />}
+                title="Energy Performance Certificate"
+                images={true}
+                items={property.epc}
+              />
+            )}
+            {property.floor_plan && (
+              <Modal
+                icon={<MdStairs size={`24px`} className="mr-2" />}
+                title="Floor plan"
+                images={true}
+                items={property.floor_plan}
+              />
+            )}
+          </div>
+        )}
       </div>
       <div className="md:sticky md:top-5 h-full w-full md:w-1/3 z-0">
         <div className="p-5 items-start flex flex-wrap w-full rounded-lg shadow-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 dark:shadow-gray-900">

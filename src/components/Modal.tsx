@@ -26,10 +26,18 @@ const Modal = ({
         <BiChevronRight />
       </button>
       {showModal && (
-        <div className="fixed top-0 left-0 right-0 h-full z-10 flex justify-center items-center overflow-x-hidden overflow-y-auto bg-slate-400/50">
+        <div
+          className="fixed top-0 left-0 right-0 h-full z-10 flex justify-center items-center overflow-x-hidden bg-slate-400/50"
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
           <div
             id="modal"
-            className="z-20 rounded-lg max-h-screen w-full max-w-2xl bg-white dark:bg-gray-700"
+            className="absolute top-5 z-20 rounded-lg w-full max-w-2xl bg-white dark:bg-gray-700"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             <div className="flex justify-between p-5 border-b dark:border-white">
               <h1 className="text-xl">{title}</h1>
@@ -43,23 +51,29 @@ const Modal = ({
 
             {images ? (
               <div className="flex flex-col p-5 items-center">
-                {items?.map((item: string) => (
-                  <img src={item} alt="floor-plan" className="w-1/2" />
+                {items?.map((item: string, index) => (
+                  <img
+                    src={item}
+                    alt="floor-plan"
+                    className="w-1/2"
+                    key={index}
+                  />
                 ))}{" "}
               </div>
             ) : (
               <div className="flex flex-col p-5 items-start">
-                {items?.map((item: string) => (
+                {items?.map((item: string, index) => (
                   <div className="flex justify-between w-full">
                     <a
                       href={item}
                       target="_blank"
                       rel="noreferrer noopener"
                       className="mb-5"
+                      key={index}
                     >
                       {item}
                     </a>
-                    <BiLinkExternal size={`1.5rem`} />
+                    <BiLinkExternal size={`24px`} />
                   </div>
                 ))}
               </div>

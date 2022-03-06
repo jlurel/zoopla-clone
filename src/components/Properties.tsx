@@ -31,26 +31,29 @@ const Properties = ({ purpose }: Props) => {
   useEffect(() => {
     const getProperties = async () => {
       setIsLoading(true);
-      const response = await fetchProperties(
+      await fetchProperties(
         area,
         purpose,
         minimum_beds,
         maximum_beds,
         property_type
-      );
-
-      const { data, status } = response;
-      setResponseStatus(status);
-
-      if (responseStatus !== 200) {
-        setShowAlert(true);
-        const { message } = data;
-        setErrorMessage(message);
-      } else {
-        const { listing } = data;
-        setProperties(listing);
-      }
-      setIsLoading(false);
+      )
+        .then((response) => {
+          const { data, status } = response;
+          setResponseStatus(status);
+          const { listing } = data;
+          setProperties(listing);
+          setIsLoading(false);
+          console.log(data);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          if (error.response) {
+            setResponseStatus(error.response.status);
+            setErrorMessage(error.response.data.message);
+            setShowAlert(true);
+          }
+        });
     };
 
     getProperties();
@@ -73,8 +76,8 @@ const Properties = ({ purpose }: Props) => {
             message={errorMessage}
             handleClose={() => setShowAlert(false)}
           />
-        ) : (
-          properties?.map((property, index) => (
+        ) : properties && properties.length > 0 ? (
+          properties.map((property, index) => (
             <Link
               key={index}
               to={`/property/${property.listing_id}`}
@@ -152,6 +155,16 @@ const Properties = ({ purpose }: Props) => {
               </div>
             </Link>
           ))
+        ) : (
+          <div>
+            <p>
+              No properties found with your criterias. Go back{" "}
+              <Link to={`/`} className="font-bold">
+                Home
+              </Link>
+              .
+            </p>
+          </div>
         )}
       </div>
     </div>

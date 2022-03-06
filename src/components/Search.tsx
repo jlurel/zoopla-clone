@@ -30,11 +30,10 @@ const Search = ({ purpose }: { purpose: Purpose }) => {
   const [filters] = useState(filterData);
   const [searchTerms, setSearchTerms] = useState<string>("");
   const [locations, setLocations] = useState<Location[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [showLocations, setShowLocations] = useState<boolean>(false);
   const [debouncedValue] = useDebounce(searchTerms, 300);
   const [area, setArea] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState({});
+  const [selectedFilters, setSelectedFilters] = useState({ area: "" });
   const [responseStatus, setResponseStatus] = useState<number>(0);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -44,21 +43,20 @@ const Search = ({ purpose }: { purpose: Purpose }) => {
     if (debouncedValue) {
       setSearchTerms(debouncedValue);
       const searchLocations = async () => {
-        setLoading(true);
-        const response = await fetchSuggestions(debouncedValue);
-        setLoading(false);
-
-        const { data, status } = response;
-        setResponseStatus(status);
-
-        if (responseStatus !== 200) {
-          setShowAlert(true);
-          const { message } = data;
-          setErrorMessage(message);
-        } else {
-          const { suggestions } = data;
-          setLocations(suggestions);
-        }
+        await fetchSuggestions(debouncedValue)
+          .then((response) => {
+            const { data } = response;
+            setShowAlert(false);
+            const { suggestions } = data;
+            setLocations(suggestions);
+          })
+          .catch((error) => {
+            if (error.response) {
+              setResponseStatus(error.response.status);
+              setErrorMessage(error.response.data.message);
+              setShowAlert(true);
+            }
+          });
       };
       searchLocations();
     }
@@ -95,7 +93,7 @@ const Search = ({ purpose }: { purpose: Purpose }) => {
         <form method="POST">
           {showAlert && (
             <ErrorAlert
-              status={429}
+              status={responseStatus}
               message={errorMessage}
               handleClose={() => setShowAlert(false)}
             />
@@ -115,14 +113,15 @@ const Search = ({ purpose }: { purpose: Purpose }) => {
                 <input
                   type="text"
                   id="area"
-                  value={searchTerms}
+                  value={area}
                   className="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Oxford"
                   autoComplete="off"
                   onChange={(e) => {
                     setSearchTerms(e.target.value);
-                    setShowLocations(true);
                     searchProperties({ area: e.target.value });
+                    setArea(e.target.value);
+                    setShowLocations(true);
                   }}
                 />
                 {searchTerms && (
@@ -131,33 +130,38 @@ const Search = ({ purpose }: { purpose: Purpose }) => {
                       onClick={() => {
                         setSearchTerms("");
                         setArea("");
+                        setLocations([]);
                       }}
                     />
                   </span>
                 )}
               </div>
-              {showLocations && !loading && area !== "" && (
-                <div className="overflow-auto h-60 mt-11 ml-10 bg-slate-200 dark:bg-slate-700 rounded-md border-gray-50 border absolute">
-                  {locations?.map((location, index) => (
-                    <div
-                      key={index}
-                      className="border-b border-gray-600 dark:border-gray-400 hover:dark:bg-slate-400"
+              <div
+                className={`${
+                  showLocations && area
+                    ? `overflow-auto h-60 mt-11 ml-10 bg-slate-200 dark:bg-slate-700 rounded-md absolute border border-slate-400 dark:border-slate-500`
+                    : `hidden`
+                }`}
+              >
+                {locations?.map((location, index) => (
+                  <div
+                    key={index}
+                    className="border-b border-gray-600 dark:border-gray-400 hover:dark:bg-slate-400"
+                  >
+                    <p
+                      className="dark:text-white p-2"
+                      onClick={() => {
+                        setSearchTerms(location.value);
+                        setArea(location.value);
+                        searchProperties({ area: location.value });
+                        setShowLocations(false);
+                      }}
                     >
-                      <p
-                        className="dark:text-white p-2"
-                        onClick={() => {
-                          setSearchTerms(location.value);
-                          setArea(location.value);
-                          searchProperties({ area: location.value });
-                          setShowLocations(false);
-                        }}
-                      >
-                        {location.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
+                      {location.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-5 mb-5">
