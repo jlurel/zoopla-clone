@@ -1,11 +1,7 @@
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 
-type Props = {
-  children: JSX.Element;
-};
-
-const Layout = ({ children }: Props) => {
+const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <div className="flex flex-col items-center min-h-screen dark:bg-slate-600 text-[#322744] dark:text-white relative">
       <NavBar />

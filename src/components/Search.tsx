@@ -9,13 +9,7 @@ import { fetchSuggestions } from "../api/fetchApi";
 import { filterData } from "../utils/filterData";
 
 import ErrorAlert from "./ErrorAlert";
-
-type Purpose = "sale" | "rent";
-
-interface Location {
-  identifier: string;
-  value: string;
-}
+import { Purpose, Location } from "../types";
 
 const icons: { [key: string]: JSX.Element } = {
   property_type: <GiHouse />,

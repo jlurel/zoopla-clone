@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import { Listing } from "../api/fetchApi";
 import {
   MdOutlineBathtub,
   MdOutlineChair,
@@ -13,14 +12,7 @@ import { FaRegFilePdf, FaRegFileVideo } from "react-icons/fa";
 import Modal from "./Modal";
 import Map from "./Map";
 import Carousel from "./Carousel";
-
-interface CustomState {
-  property: Listing;
-}
-
-type FurnishedState = {
-  [key: string]: string;
-};
+import { FurnishedState, PropertyDetailsState } from "../types";
 
 const furnishedState: FurnishedState = {
   unfurnished: "Unfurnished",
@@ -31,7 +23,7 @@ const furnishedState: FurnishedState = {
 
 const PropertyDetails = () => {
   const location = useLocation();
-  const { property } = location.state as CustomState;
+  const { property } = location.state as PropertyDetailsState;
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdPhotoLibrary } from "react-icons/md";
 import Slider from "react-slick";
-import { Image } from "../api/fetchApi";
+import { Image } from "../types";
 
 const Carousel = ({ slides }: { slides: Image[] }) => {
   const [activeSlide, setActiveSlide] = useState<number>(0);

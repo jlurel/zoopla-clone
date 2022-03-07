@@ -3,17 +3,18 @@ import L from "leaflet";
 
 import marker from "../assets/images/pin.png";
 
-interface Props {
-  latitude: number;
-  longitude: number;
-}
-
 const markerIcon: L.Icon = L.icon({
   iconUrl: marker,
   iconSize: [32, 32],
 });
 
-const Map = ({ latitude, longitude }: Props) => {
+const Map = ({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}) => {
   return (
     <div className="map h-max rounded shadow-xl md:mx-6 bg-slate-700">
       <MapContainer

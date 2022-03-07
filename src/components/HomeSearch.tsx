@@ -3,14 +3,8 @@ import { MdCancel } from "react-icons/md";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useDebounce } from "use-debounce";
 import { fetchSuggestions } from "../api/fetchApi";
+import { Location, Purpose } from "../types";
 import { homeFilterData } from "../utils/filterData";
-
-type Purpose = "sale" | "rent";
-
-interface Location {
-  identifier: string;
-  value: string;
-}
 
 const HomeSearch = () => {
   const [isSaleButtonActive, setSaleButtonActive] = useState<boolean>(true);

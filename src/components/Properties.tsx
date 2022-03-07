@@ -6,16 +6,13 @@ import {
   MdOutlineKingBed,
 } from "react-icons/md";
 
-import { fetchProperties, Listing } from "../api/fetchApi";
+import { fetchProperties } from "../api/fetchApi";
 import ErrorAlert from "./ErrorAlert";
 import PropertyLoader from "./PropertyLoader";
 import defaultImage from "../assets/images/no-image.svg";
+import { Listing, Purpose } from "../types";
 
-type Props = {
-  purpose?: "rent" | "sale";
-};
-
-const Properties = ({ purpose }: Props) => {
+const Properties = ({ purpose }: { purpose: Purpose }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [properties, setProperties] = useState<Listing[]>();
   const [searchParams] = useSearchParams();
